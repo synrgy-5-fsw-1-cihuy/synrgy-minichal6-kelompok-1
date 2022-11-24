@@ -39,15 +39,16 @@ const createCarHandler = (request, response) => {
 }
 
 // get car by id
-const getCarByIdHandler = (request, response) => {
-    Car.findByPk(request.params.id).then(result => {
-        if(result == null) {
+const getCarByIdHandler = async (request, response) => {
+    const carById = await carService.doGetCarById(request.params.id, response);
+        
+        if(carById == null) {
             response.status(404).json({message: "Car not found"});
             return;
         }
         
-        response.status(200).json({data: result})
-    })
+        response.status(200).json({data: carById})
+    
 }
 
 module.exports = {getAllCarHandler, getCarByIdHandler, createCarHandler};

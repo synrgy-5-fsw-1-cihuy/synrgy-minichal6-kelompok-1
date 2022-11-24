@@ -44,14 +44,14 @@ const updateProductHandler = async (request, response) => {
         }
         const { name, description, price } = request.body;
         if (!name && !description && !price) {
-          response.status(400).json({ message: "Bad request" });
+          response.status(400).json({ message: "Error" });
           return;
         }
         await product.update(request.body);
-        response.json({ message: "OK" });
-      } catch (error) {
+        response.json({ message: "Product has been updated" });
+      } catch (err) {
         console.error(error);
-        response.status(500).json({ message: "Internal server error" });
+        throw err;
       }
 }
 
